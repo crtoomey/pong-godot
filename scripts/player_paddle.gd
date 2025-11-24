@@ -12,7 +12,7 @@ var screenSize = 540
 func _process(delta: float) -> void:
 	
 
-	
+	#pretty self explanatory, we move up or down based on input
 	if Input.is_action_pressed("move_down"):
 		direction = 1
 	elif Input.is_action_pressed("move_up"):
