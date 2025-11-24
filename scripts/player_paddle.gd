@@ -2,12 +2,16 @@ extends StaticBody2D
 
 var direction = 0
 var speed = 300
+var screenSize = 540
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
 
 	
 	
 
 func _process(delta: float) -> void:
 	
+
 	
 	if Input.is_action_pressed("move_down"):
 		direction = 1
@@ -17,3 +21,4 @@ func _process(delta: float) -> void:
 		direction = 0
 		
 	position.y += direction * delta * speed
+	position.y = clamp(position.y, 0, screenSize)

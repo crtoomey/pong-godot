@@ -1,17 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://dv1uuf8ekm2l5"]
+[gd_scene load_steps=10 format=3 uid="uid://dv1uuf8ekm2l5"]
 
 [ext_resource type="Texture2D" uid="uid://bgf673j7kmfca" path="res://assets/game arena.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://b0q1mx55re2j1" path="res://scripts/player_paddle.gd" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://4qsfp418wvna" path="res://scenes/cpu_paddle.gd" id="3_jyhfs"]
 [ext_resource type="Script" uid="uid://dq6h07dur2fkj" path="res://scripts/ball.gd" id="3_sugp2"]
-[ext_resource type="Script" uid="uid://b4k38pl67xr3m" path="res://scenes/left_score.gd" id="5_tbgi4"]
-[ext_resource type="Script" uid="uid://crtrtmf2atl3r" path="res://scenes/right_score.gd" id="6_tefeu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
 size = Vector2(20, 90)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
-size = Vector2(471, 540)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
+size = Vector2(723, 540)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 
@@ -65,15 +63,17 @@ grow_vertical = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CPUPaddle"]
 shape = SubResource("RectangleShape2D_o5qli")
 
-[node name="AIVision" type="Area2D" parent="CPUPaddle"]
+[node name="AI" type="Area2D" parent="CPUPaddle"]
+collision_layer = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CPUPaddle/AIVision"]
-position = Vector2(-205.5, 0)
-shape = SubResource("RectangleShape2D_tefeu")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CPUPaddle/AI"]
+position = Vector2(-331.5, 0)
+shape = SubResource("RectangleShape2D_tbgi4")
 
 [node name="Ball" type="CharacterBody2D" parent="."]
 position = Vector2(480, 270)
 collision_mask = 31
+slide_on_ceiling = false
 script = ExtResource("3_sugp2")
 
 [node name="ColorRect" type="ColorRect" parent="Ball"]
@@ -94,6 +94,7 @@ shape = SubResource("RectangleShape2D_0wfyh")
 
 [node name="Border" type="StaticBody2D" parent="."]
 collision_layer = 8
+collision_mask = 3
 
 [node name="Top" type="CollisionShape2D" parent="Border"]
 position = Vector2(480, -32)
@@ -105,45 +106,17 @@ shape = SubResource("RectangleShape2D_sugp2")
 
 [node name="LeftScore" type="Area2D" parent="."]
 collision_layer = 16
-script = ExtResource("5_tbgi4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftScore"]
 position = Vector2(-32, 270)
 shape = SubResource("RectangleShape2D_jyhfs")
 
-[node name="CPUScore" type="Label" parent="LeftScore"]
-texture_filter = 1
-texture_repeat = 1
-offset_left = 488.0
-offset_right = 528.0
-offset_bottom = 34.0
-theme_override_font_sizes/font_size = 24
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="RightScore" type="Area2D" parent="."]
 collision_layer = 16
-script = ExtResource("6_tefeu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightScore"]
 position = Vector2(992, 270)
 shape = SubResource("RectangleShape2D_jyhfs")
 
-[node name="PlayerScore" type="Label" parent="RightScore"]
-texture_filter = 1
-texture_repeat = 1
-offset_left = 432.0
-offset_right = 472.0
-offset_bottom = 34.0
-theme_override_font_sizes/font_size = 24
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Timer" type="Timer" parent="."]
-
-[connection signal="body_entered" from="CPUPaddle/AIVision" to="CPUPaddle" method="_on_ai_vision_body_entered"]
-[connection signal="body_exited" from="CPUPaddle/AIVision" to="CPUPaddle" method="_on_ai_vision_body_exited"]
-[connection signal="body_entered" from="LeftScore" to="LeftScore" method="_on_body_entered"]
-[connection signal="body_entered" from="RightScore" to="RightScore" method="_on_body_entered"]
+[connection signal="body_entered" from="CPUPaddle/AI" to="CPUPaddle" method="_on_ai_body_entered"]
+[connection signal="body_exited" from="CPUPaddle/AI" to="CPUPaddle" method="_on_ai_body_exited"]

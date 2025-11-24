@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dv1uuf8ekm2l5"]
+[gd_scene load_steps=11 format=3 uid="uid://dv1uuf8ekm2l5"]
 
 [ext_resource type="Texture2D" uid="uid://bgf673j7kmfca" path="res://assets/game arena.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://b0q1mx55re2j1" path="res://scripts/player_paddle.gd" id="2_0wfyh"]
@@ -9,9 +9,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
 size = Vector2(20, 90)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
-size = Vector2(471, 540)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 
@@ -64,12 +61,6 @@ grow_vertical = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CPUPaddle"]
 shape = SubResource("RectangleShape2D_o5qli")
-
-[node name="AIVision" type="Area2D" parent="CPUPaddle"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CPUPaddle/AIVision"]
-position = Vector2(-205.5, 0)
-shape = SubResource("RectangleShape2D_tefeu")
 
 [node name="Ball" type="CharacterBody2D" parent="."]
 position = Vector2(480, 270)
@@ -143,7 +134,5 @@ vertical_alignment = 1
 
 [node name="Timer" type="Timer" parent="."]
 
-[connection signal="body_entered" from="CPUPaddle/AIVision" to="CPUPaddle" method="_on_ai_vision_body_entered"]
-[connection signal="body_exited" from="CPUPaddle/AIVision" to="CPUPaddle" method="_on_ai_vision_body_exited"]
 [connection signal="body_entered" from="LeftScore" to="LeftScore" method="_on_body_entered"]
 [connection signal="body_entered" from="RightScore" to="RightScore" method="_on_body_entered"]
